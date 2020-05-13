@@ -32,7 +32,10 @@
         const onSubmitForm = (e) => {
           e.preventDefault();
           if ( parseInt(value) === num1 * num2 ) {
-            setResult(`Answer : ${prevState.num1} X ${prevState.num2} = ${prevState.value}`);
+            setResult( (prevResult) => {
+              `Answer : ${num1} X ${num2} = ${value}`
+              }
+            );
             setNum1(Math.ceil(Math.random() * 9));
             setNum2(Math.ceil(Math.random() * 9));
             setValue('');
