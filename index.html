@@ -27,8 +27,43 @@
         const [num2, setNum2] = React.useState(Math.ceil(Math.random() * 9));
         const [value, setValue] = React.useState('');
         const [result, setResult] = React.useState('');
+        const inputRef = React.useRef(null);
+        
+        const onSubmitForm = (e) => {
+          e.preventDefault();
+          if ( parseInt(value) === num1 * num2 ) {
+            setResult(`Answer : ${prevState.num1} X ${prevState.num2} = ${prevState.value}`);
+            setNum1(Math.ceil(Math.random() * 9));
+            setNum2(Math.ceil(Math.random() * 9));
+            setValue('');
+          } else {
+            setResult("Try Again!");
+            setValue('');
+          }
+          inputRef.current.focus();
+        }
 
-        return <div>{num1} {num2} {value} {result}</div>
+        const onChangeInput = (e) => {
+          setValue(e.target.value);
+        }
+
+        return (
+            <fragment>
+              <div>
+                {num1} X {num2} = ?
+              </div>
+              <form onSubmit={onSubmitForm}>
+                <input
+                  type="number"
+                  value={value}
+                  onChange={onChangeInput}
+                  ref={inputRef} 
+                />
+                <button>GO!</button>
+              </form>
+              <div>{result}</div>
+            </fragment>
+          );
       } */
 
       class GuGuDan extends React.Component {
