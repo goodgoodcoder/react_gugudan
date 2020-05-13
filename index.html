@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GUGUDAN</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- import React -->
+    <script
+      src="https://unpkg.com/react@16/umd/react.production.min.js"
+      crossorigin
+    ></script>
+    <!-- import ReactDOM -->
+    <script
+      src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
+      crossorigin
+    ></script>
+    <!-- import babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- React App.js -->
+    <script type="text/babel">
+      class GuGuDan extends React.Component {
+        state = {
+          num1: Math.ceil(Math.random() * 9),
+          num2: Math.ceil(Math.random() * 9),
+          value: "",
+          result: "",
+        };
+
+        onSubmit = (e) => {
+          e.preventDefault();
+          if (
+            parseInt(this.state.value) ===
+            this.state.num1 * this.state.num2
+          ) {
+            this.setState((prevState) => {
+              return {
+                result: `Answer : ${prevState.num1} X ${prevState.num2} = ${prevState.value}`,
+                num1: Math.ceil(Math.random() * 9),
+                num2: Math.ceil(Math.random() * 9),
+                value: "",
+              };
+            });
+          } else {
+            this.setState({
+              result: "Try Again!",
+              value: "",
+            });
+          }
+          this.input.focus(); // DOM에 직접 접근
+        };
+
+        onChange = (e) => this.setState({ value: e.target.value });
+
+        // DOM에 직접 접근하고 싶을 때
+        input;
+        onRefInput = (c) => {
+          this.input = c;
+        };
+
+        // setState();를 하면 render 함수가 실행됨
+        render() {
+          return (
+            <fragment>
+              <div>
+                {this.state.num1} X {this.state.num2} = ?
+              </div>
+              <form onSubmit={this.onSubmit}>
+                <input
+                  type="number"
+                  value={this.state.value}
+                  onChange={this.onChange}
+                  ref={this.onRefInput} // DOM에 직접 접근하고 싶을 때
+                />
+                <button>GO!</button>
+              </form>
+              <div>{this.state.result}</div>
+            </fragment>
+          );
+        }
+      }
+    </script>
+
+    <!-- ReactDOM -->
+    <script type="text/babel">
+      ReactDOM.render(<GuGuDan />, document.querySelector("#root"));
+    </script>
+  </body>
+</html>
